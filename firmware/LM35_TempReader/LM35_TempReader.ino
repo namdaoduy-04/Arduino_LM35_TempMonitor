@@ -1,25 +1,27 @@
-// Khai báo chân kết nối cảm biến LM35
-const int potPin = A0; 
-float temp;
+// Định nghĩa các chân Analog
+const int sensor1Pin = A0; 
+const int sensor2Pin = A1; 
 
 void setup() {
-  // Khởi tạo giao tiếp Serial ở baudrate 9600
+  // Khởi tạo Serial với tốc độ 9600 baud
   Serial.begin(9600);
 }
 
 void loop() {
-  // Đọc giá trị điện áp từ chân A0 (0 - 1023)
-  int analogValue = analogRead(potPin);
-  
-  // Chuyển đổi giá trị analog sang nhiệt độ (C)
-  // Công thức: (Giá trị * 5.0 / 1024) * 100
-  temp = analogValue * (5.0 / 1024.0) * 100.0;
-  
-  // In kết quả ra Serial Monitor
-  Serial.print("Nhiet do: ");
-  Serial.print(temp);
-  Serial.println(" C");
-  
+  // Đọc giá trị ADC từ 2 kênh
+  int adcVal1 = analogRead(sensor1Pin);
+  int adcVal2 = analogRead(sensor2Pin);
+
+  // Chuyển đổi sang nhiệt độ (độ C)
+  float temp1 = (adcVal1 * 500.0) / 1023.0;
+  float temp2 = (adcVal2 * 500.0) / 1023.0;
+
+  // Gửi dữ liệu lên Serial Monitor theo định dạng CSV
+  // Ví dụ: 28.50,30.12
+  Serial.print(temp1);
+  Serial.print(",");
+  Serial.println(temp2);
+
   // Đợi 1 giây trước khi đọc lần tiếp theo
   delay(1000);
 }
