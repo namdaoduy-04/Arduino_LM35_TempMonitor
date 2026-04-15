@@ -1,27 +1,29 @@
-// Định nghĩa các chân Analog
-const int sensor1Pin = A0; 
-const int sensor2Pin = A1; 
+// 1. Định nghĩa thêm chân A2
+const int sensor1Pin = A0;
+const int sensor2Pin = A1;
+const int sensor3Pin = A2; // Thêm dòng này
 
 void setup() {
-  // Khởi tạo Serial với tốc độ 9600 baud
   Serial.begin(9600);
 }
 
 void loop() {
-  // Đọc giá trị ADC từ 2 kênh
-  int adcVal1 = analogRead(sensor1Pin);
-  int adcVal2 = analogRead(sensor2Pin);
+  // 2. Đọc thêm giá trị ADC từ kênh A2
+  int adcAcl1 = analogRead(sensor1Pin);
+  int adcAcl2 = analogRead(sensor2Pin);
+  int adcAcl3 = analogRead(sensor3Pin); // Thêm dòng này
 
-  // Chuyển đổi sang nhiệt độ (độ C)
-  float temp1 = (adcVal1 * 500.0) / 1023.0;
-  float temp2 = (adcVal2 * 500.0) / 1023.0;
+  // Chuyển đổi sang nhiệt độ
+  float temp1 = (adcAcl1 * 500.0) / 1023.0;
+  float temp2 = (adcAcl2 * 500.0) / 1023.0;
+  float temp3 = (adcAcl3 * 500.0) / 1023.0; // Thêm dòng này
 
-  // Gửi dữ liệu lên Serial Monitor theo định dạng CSV
-  // Ví dụ: 28.50,30.12
+  // 3. Gửi dữ liệu lên Serial (thêm temp3)
   Serial.print(temp1);
   Serial.print(",");
-  Serial.println(temp2);
+  Serial.print(temp2);
+  Serial.print(",");      // Thêm dấu phẩy ngăn cách
+  Serial.println(temp3);  // Đổi print thành println ở giá trị cuối cùng
 
-  // Đợi 1 giây trước khi đọc lần tiếp theo
   delay(1000);
 }
